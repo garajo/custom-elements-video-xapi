@@ -1,0 +1,32 @@
+{
+  "name": "svelte-app",
+  "version": "1.0.0",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "rollup": "^0.62.0",
+    "rollup-plugin-babel": "^3.0.7",
+    "rollup-plugin-buble": "^0.19.2",
+    "rollup-plugin-commonjs": "^9.1.4",
+    "rollup-plugin-livereload": "git+https://git@github.com/garajo/rollup-plugin-livereload.git",
+    "rollup-plugin-node-builtins": "git+https://git@github.com/garajo/rollup-plugin-node-builtins.git",
+    "rollup-plugin-node-globals": "^1.2.1",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-serve": "^0.4.2",
+    "rollup-plugin-svelte": "^4.0.0",
+    "rollup-plugin-terser": "^1.0.1",
+    "rollup-plugin-typescript": "^0.8.1",
+    "rollup-plugin-typescript2": "^0.16.1",
+    "rollup-plugin-uglify": "^4.0.0",
+    "serve": "^9.1.0",
+    "svelte": "^2.8.1",
+    "temp-dir": "^1.0.0",
+    "tincanjs": "^0.50.0",
+    "typescript": "^3.0.1"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c ./rollup.dev.config.js -w",
+    "start": "serve public"
+  },
+  "dependencies": {}
+}
