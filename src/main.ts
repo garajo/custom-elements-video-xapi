@@ -4,7 +4,7 @@ import {
   StringValidator
 } from './util/validation'
 
-const outstr = StringValidator('4')
+const outstr = StringValidator('')
 
 const lrs = new TinCan.LRS({
   endpoint: "https://cloud.scorm.com/tc/public/",
@@ -14,4 +14,4 @@ const lrs = new TinCan.LRS({
 });
 console.log('lrs', lrs)
 
-document.body.innerHTML = `<my-app name="${outstr}">`;
+document.body.innerHTML = `<video-xapi name="${outstr}">`;
