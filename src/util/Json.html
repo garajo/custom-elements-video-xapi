@@ -1,0 +1,16 @@
+
+<pre style="display:none;"><slot></slot></pre>
+
+<script>
+
+export default {
+  tag: 'data-json',
+
+  methods: {
+    toJSON() {
+      return JSON.parse(this.textContent.trim())
+    }
+  }
+}
+
+</script>

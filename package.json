@@ -18,10 +18,11 @@
     "rollup-plugin-typescript2": "^0.16.1",
     "rollup-plugin-uglify": "^4.0.0",
     "serve": "^9.1.0",
-    "svelte": "^2.8.1",
+    "svelte": "^2.11.0",
     "temp-dir": "^1.0.0",
     "tincanjs": "^0.50.0",
-    "typescript": "^3.0.1"
+    "typescript": "^3.0.1",
+    "youtube-player": "^5.5.0"
   },
   "scripts": {
     "build": "rollup -c",

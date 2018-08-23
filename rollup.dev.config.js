@@ -43,7 +43,6 @@ export default {
       customElement: true
     }),
     serve({
-      open: true,
       contentBase: 'public',
       port: 5000
     }),

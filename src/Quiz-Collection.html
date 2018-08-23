@@ -1,0 +1,32 @@
+<slot></slot>
+
+<script>
+
+import './quiz-collections/QuizItem.html';
+import './quiz-collections/True-False.html';
+
+
+export default {
+  tag: 'quiz-collection',
+  oncreate() {
+    const [slot] = this.shadowRoot.querySelectorAll('slot')
+    const slotLoadHandler = (e) => {
+        console.log('e', e)
+        setTimeout(() => {
+          console.log('this.children', this.children)
+          
+          Array.from(this.children).forEach(ea => {
+            console.log('ea', ea)
+            console.log('ea', ea.tagName)
+          })
+        
+        }, 1)
+
+      slot.removeEventListener('slotchange', slotLoadHandler)
+    }
+
+    slot.addEventListener('slotchange', slotLoadHandler)
+  },
+}
+
+</script>

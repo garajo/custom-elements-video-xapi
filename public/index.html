@@ -1,20 +1,89 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-	<meta charset='utf8'>
-	<meta name='viewport' content='width=device-width'>
+  <meta charset='utf8'>
+  <meta name='viewport' content='width=device-width'>
 
-	<title>Svelte app</title>
+  <title>Svelte app</title>
 
-	<link rel='stylesheet' href='global.css'>
+  <link rel='stylesheet' href='global.css'>
 </head>
 
 <body>
   <script src='bundle.js'></script>
-	<script>    
-		if (typeof customElements === 'undefined') {
-			document.body.innerHTML = '<p>This browser does not support custom elements. See <a href="https://caniuse.com/#feat=custom-elementsv1">caniuse.com</a> for the gory details.</p>';
-		}
-	</script>
+  <script>
+    if (typeof customElements === 'undefined') {
+      document.body.innerHTML =
+      '<p>This browser does not support custom elements. See <a href="https://caniuse.com/#feat=custom-elementsv1">caniuse.com</a> for the gory details.</p>';
+    }
+    </script>
+
+  <div>
+
+    <div id="player"></div>
+
+    <!-- videoid="EWLt6G85zC4" -->
+    <!-- videoid="EWLt6G85zC4" -->
+    <video-quiz-xapi
+      playerid="player"
+      videoid="v756sSCfNe0"
+    >
+      <data-json>
+        [{
+          "starttime": "0:35",
+          "endtime": "0:55",
+          "quiz_title": "Bringing the chicken to temperature",
+          "index": 1
+        }, {
+          "starttime": "0:55",
+          "endtime": "1:30",
+          "quiz_title": "Removing the wishbone",
+          "index": 2
+        }, {
+          "starttime": "1:41",
+          "endtime": "1:52",
+          "quiz_title": "Seasoning the inside",
+          "index": 3
+        }, {
+          "starttime": "1:52",
+          "endtime": "2:38",
+          "quiz_title": "Trussing the chicken",
+          "index": 4
+        }, {
+          "starttime": "2:38",
+          "endtime": "3:08",
+          "quiz_title": "Seasoning the outside",
+          "index": 5
+        }, {
+          "starttime": "3:08",
+          "endtime": "3:46",
+          "quiz_title": "Time and Temperature ",
+          "index": 6
+        }, {
+          "starttime": "3:46",
+          "endtime": "4:22",
+          "quiz_title": "Carving the chicken",
+          "index": 7
+        }]
+      </data-json>
+      <quiz-collection>
+        <quiz-item index=1 quiztitle="Bringing the chicken to temperature" >
+          <true-false answer=false >
+            You want to cook a cold chicken straight from the refridgerator.
+          </true-false>
+        </quiz-item>
+        <quiz-item index=1 quiztitle="Bringing the chicken to temperature" >
+          <true-false answer=false >
+            You want to cook a cold chicken straight from the refridgerator.
+          </true-false>
+
+
+        </quiz-item>
+      </quiz-collection>
+    </video-xapi>
+  </div>
+
 </body>
+
 </html>

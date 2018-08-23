@@ -1,10 +1,15 @@
-import './Video-Xapi.html';
+import './util/Json.html'
+import './VideoQuizXapi.html';
+import './Quiz-Collection.html';
+// import './True-False.html';
 import TinCan from 'tincanjs'
 import {
   StringValidator
 } from './util/validation'
 
-const outstr = StringValidator('')
+const outstr = StringValidator('xx')
+
+
 
 const lrs = new TinCan.LRS({
   endpoint: "https://cloud.scorm.com/tc/public/",
@@ -14,4 +19,3 @@ const lrs = new TinCan.LRS({
 });
 console.log('lrs', lrs)
 
-document.body.innerHTML = `<video-xapi name="${outstr}">`;

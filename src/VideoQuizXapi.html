@@ -1,0 +1,99 @@
+<slot></slot>
+
+<VideoPlayer 
+  bind:videoid 
+  bind:playerid 
+  bind:data=starttimes
+>
+  <p>embedded child of video</p>
+</VideoPlayer>
+
+<style>
+  h1 {
+    color: purple;
+  }
+
+  code {
+    font-family: Menlo, Inconsolata, monospace;
+    font-size: 14px;
+    background-color: #f0f0f0;
+    border-radius: 2px;
+    padding: 2px 5px;
+  }
+</style>
+
+<script>
+  import VideoPlayer from './VideoPlayer.html'
+  import {
+    mapUniqElementsObject
+  } from './util'
+
+  export default {
+    tag: 'video-quiz-xapi',
+    data() {
+      return {
+        data: [],
+      }
+    },
+    computed: {
+      starttimes({ data }) {
+        return data.map(ea => ea.starttime)
+      }
+    },
+    components: {
+      VideoPlayer,
+    },
+
+    methods: {
+      onPlayerStateChange(event) {
+        
+        // if (event.data == YT.PlayerState.PLAYING && !done) {
+        //   setTimeout(stopVideo, 1000);
+        //   done = true;
+        // }
+      }
+    },
+
+    oncreate() {
+      const [slot] = this.shadowRoot.querySelectorAll('slot')
+      const slotLoadHandler = (e) => {
+        setTimeout(() => {
+          const childrenElems = mapUniqElementsObject(Array.from(this.children), (a) => a)
+          const datajson_elem = childrenElems['data-json']
+
+          // console.log('datajson_elem', datajson_elem.toJSON())
+
+          this.set({
+            data: datajson_elem.toJSON()
+          })
+
+        }, 1)
+        slot.removeEventListener('slotchange', slotLoadHandler)
+      }
+
+      slot.addEventListener('slotchange', slotLoadHandler)
+
+      
+    },
+    
+
+
+    // onstate() {
+    //   console.log('onstate')
+    //   console.log(this.get())
+    //   const {
+    //     playerid,
+    //     videoid,
+    //   } = this.get()
+    //   console.log('playerid', playerid)
+    //   console.log('videoid', videoid)
+
+    // },
+    // onupdate() {
+    //   console.log('update', this.get())
+    // }
+
+
+    
+  };
+</script>
