@@ -21,65 +21,70 @@
 
   <div>
 
-    <div id="player"></div>
-
+    <!--
+      <div id="player"></div> 
+      <video-quiz-xapi videoid="EWLt6G85zC4" playerid="player" >
+    -->
     <!-- videoid="EWLt6G85zC4" -->
     <!-- videoid="v756sSCfNe0" -->
     <video-quiz-xapi
       videoid="EWLt6G85zC4"
-      playerid="player"
     >
       <data-json>
         [{
           "starttime": "0:35",
           "endtime": "0:55",
-          "quiz_title": "Bringing the chicken to temperature",
-          "index": 1
+          "sectionTitle": "Bringing the chicken to temperature",
+          "contentIndex": 1
         }, {
           "starttime": "0:55",
           "endtime": "1:30",
-          "quiz_title": "Removing the wishbone",
-          "index": 2
+          "sectionTitle": "Removing the wishbone",
+          "contentIndex": 2
         }, {
           "starttime": "1:41",
           "endtime": "1:52",
-          "quiz_title": "Seasoning the inside",
-          "index": 3
+          "sectionTitle": "Seasoning the inside",
+          "contentIndex": 3
         }, {
           "starttime": "1:52",
           "endtime": "2:38",
-          "quiz_title": "Trussing the chicken",
-          "index": 4
+          "sectionTitle": "Trussing the chicken",
+          "contentIndex": 4
         }, {
           "starttime": "2:38",
           "endtime": "3:08",
-          "quiz_title": "Seasoning the outside",
-          "index": 5
+          "sectionTitle": "Seasoning the outside",
+          "contentIndex": 5
         }, {
           "starttime": "3:08",
           "endtime": "3:46",
-          "quiz_title": "Time and Temperature ",
-          "index": 6
+          "sectionTitle": "Time and Temperature ",
+          "contentIndex": 6
         }, {
           "starttime": "3:46",
           "endtime": "4:22",
-          "quiz_title": "Carving the chicken",
-          "index": 7
+          "sectionTitle": "Carving the chicken",
+          "contentIndex": 7
         }]
       </data-json>
       <quiz-collection>
-        <quiz-item index=1 quiztitle="Bringing the chicken to temperature" >
-          <true-false answer=false >
+        <quiz-section contentIndex=1 >
+          <true-false id="tf1">
+            It is a good idea to cook a cold chicken straight from the refridgerator.
+          </true-false>
+        </quiz-section>
+        <quiz-section contentIndex=2 >
+          <true-false id="tf2">
             You want to cook a cold chicken straight from the refridgerator.
           </true-false>
-        </quiz-item>
-        <quiz-item index=1 quiztitle="Bringing the chicken to temperature" >
-          <true-false answer=false >
+        </quiz-section>
+        <quiz-section contentIndex=2 >
+          <true-false id="tf2">
             You want to cook a cold chicken straight from the refridgerator.
           </true-false>
+        </quiz-section>
 
-
-        </quiz-item>
       </quiz-collection>
     </video-xapi>
   </div>

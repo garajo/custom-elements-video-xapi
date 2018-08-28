@@ -1,6 +1,6 @@
 <slot></slot>
 <!-- Why is the below element not available oncreate? -->
-<div class="loc_player"></div>
+<div ref:videoplayer ></div>
 
 <quiz-component></quiz-component>
 
@@ -27,6 +27,21 @@
   export default {
     tag: 'ce-video',
 
+    methods: {
+      playVideo() {
+
+      },
+      stopVideo() {
+
+      },
+      onPlayVideo() {
+
+      },
+      onStopVideo() {
+
+      },
+    },
+
     oncreate() {
       // // why doesn't the effin below work?
       // console.log('WTF:', document.getElementsByClassName('loc_player'))
@@ -41,12 +56,11 @@
 
       window.onYouTubeIframeAPIReady = function() {
         const { videoid, playerid, data } = component.get()
-        
-        // console.log('data', data)
 
-        if (document.getElementById(playerid) === null) alert('missing "player" id element')
+        console.log('component.refs.videoplayer', component.refs.videoplayer)
         
-        player = new YT.Player(playerid, {
+
+        player = new YT.Player(playerid || component.refs.videoplayer, {
           height: '390',
           width: '640',
           videoId: videoid,

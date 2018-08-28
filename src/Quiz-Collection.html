@@ -1,24 +1,30 @@
+<h3>{collectionTitle}</h3>
 <slot></slot>
 
 <script>
 
-import './quiz-collections/QuizItem.html';
+import './quiz-collections/QuizSection.html';
 import './quiz-collections/True-False.html';
 
 
 export default {
   tag: 'quiz-collection',
+  data() {
+    return {
+      collectionTitle: 'temp',
+    }
+  },
   oncreate() {
     const [slot] = this.shadowRoot.querySelectorAll('slot')
     const slotLoadHandler = (e) => {
-        console.log('e', e)
+        // console.log('e', e)
         setTimeout(() => {
-          console.log('this.children', this.children)
+          // console.log('this.children', this.children)
           
-          Array.from(this.children).forEach(ea => {
-            console.log('ea', ea)
-            console.log('ea', ea.tagName)
-          })
+          // Array.from(this.children).forEach(ea => {
+          //   console.log('ea', ea)
+          //   console.log('ea', ea.tagName)
+          // })
         
         }, 1)
 
@@ -27,6 +33,22 @@ export default {
 
     slot.addEventListener('slotchange', slotLoadHandler)
   },
+  methods: {
+    setTitle(val) {
+      this.set({ collectionTitle: val })
+    },
+    startQuiz() {
+      console.log('start quiz')
+      console.log('this.children', this.children)
+       
+    },
+    gradeQuiz() {
+
+    },
+    endQuiz() {
+      
+    }
+  }
 }
 
 </script>

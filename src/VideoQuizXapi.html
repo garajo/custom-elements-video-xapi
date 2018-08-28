@@ -1,12 +1,9 @@
-<slot></slot>
 
-<VideoPlayer 
-  bind:videoid 
-  bind:playerid 
-  bind:data=starttimes
->
+<VideoPlayer bind:videoid bind:playerid bind:data=starttimes>
   <p>embedded child of video</p>
 </VideoPlayer>
+<slot></slot>
+
 
 <style>
   h1 {
@@ -27,6 +24,14 @@
   import {
     mapUniqElementsObject
   } from './util'
+  import './util/Json.html'
+  import './Quiz-Collection.html';
+  import TinCan from 'tincanjs'
+  import {
+    StringValidator
+  } from './util/validation'
+
+
 
   export default {
     tag: 'video-quiz-xapi',
@@ -36,7 +41,9 @@
       }
     },
     computed: {
-      starttimes({ data }) {
+      starttimes({
+        data
+      }) {
         return data.map(ea => ea.starttime)
       }
     },
@@ -46,25 +53,61 @@
 
     methods: {
       onPlayerStateChange(event) {
-        
+
         // if (event.data == YT.PlayerState.PLAYING && !done) {
         //   setTimeout(stopVideo, 1000);
         //   done = true;
         // }
-      }
+      },
+      mapVideoQuizzes(src, arr) {
+        return src.map(ea => (
+            {
+              ...ea,
+               sectionQuizzes: arr.reduce(
+                (acc, val) => {
+                  if (Number.parseInt(val.getAttribute('contentIndex')) === Number.parseInt(ea.contentIndex)) return acc.concat(val)
+                  return acc
+                },
+                [],
+              ),
+            }
+          ))
+      },
     },
 
     oncreate() {
+
+      const outstr = StringValidator('xx')
+      const lrs = new TinCan.LRS({
+        endpoint: "https://cloud.scorm.com/tc/public/",
+        username: "<Test User>",
+        password: "<Test Password>",
+        allowFail: false
+      });
+      console.log('lrs', lrs)
+
+
+
       const [slot] = this.shadowRoot.querySelectorAll('slot')
       const slotLoadHandler = (e) => {
         setTimeout(() => {
           const childrenElems = mapUniqElementsObject(Array.from(this.children), (a) => a)
           const datajson_elem = childrenElems['data-json']
+          const quizcollect_elem = childrenElems['quiz-collection']
+          const initdata = datajson_elem.toJSON()
+          const video_quizzes = this.mapVideoQuizzes(initdata, Array.from(quizcollect_elem.children))
 
-          // console.log('datajson_elem', datajson_elem.toJSON())
+          console.log('video_quizzes', video_quizzes)
+          console.log('quizcollect_elem.fee()', quizcollect_elem.setTitle('fee'))
+
+          quizcollect_elem.startQuiz()
+
+          for (let item of quizcollect_elem.children) {
+            item.setAttribute('sectiontitle', 'fee')
+          }
 
           this.set({
-            data: datajson_elem.toJSON()
+            data: initdata,
           })
 
         }, 1)
@@ -73,9 +116,9 @@
 
       slot.addEventListener('slotchange', slotLoadHandler)
 
-      
+
     },
-    
+
 
 
     // onstate() {
@@ -94,6 +137,6 @@
     // }
 
 
-    
+
   };
 </script>
