@@ -1,7 +1,20 @@
 <h2>{sectiontitle}</h2>
 <slot></slot>
+<button on:click="reviewVideo()">review video</button>
 <script>
   export default {
     tag: 'quiz-section',
+    methods: {
+      setVideoPlayDelegate(fn) {
+        console.log('fn', fn)
+        
+        this.set({ video_review_playback: fn })
+        
+      },
+      reviewVideo() {
+        const { video_review_playback } = this.get()
+        // video_review_playback.call(40, 45)
+      },
+    }
   }
 </script>

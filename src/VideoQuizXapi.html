@@ -1,7 +1,8 @@
 
-<VideoPlayer bind:videoid bind:playerid bind:data=starttimes>
+<VideoPlayer ref:vidplayer bind:videoid bind:playerid bind:data=starttimes>
   <p>embedded child of video</p>
 </VideoPlayer>
+<button on:click="playVideoSection(20, 25)" >button</button>
 <slot></slot>
 
 
@@ -52,12 +53,10 @@
     },
 
     methods: {
-      onPlayerStateChange(event) {
-
-        // if (event.data == YT.PlayerState.PLAYING && !done) {
-        //   setTimeout(stopVideo, 1000);
-        //   done = true;
-        // }
+      playVideoSection(starttime, endtime) {
+console.log(starttime, endtime)
+        
+        this.refs['vidplayer'].playSection(starttime, endtime)
       },
       mapVideoQuizzes(src, arr) {
         return src.map(ea => (
@@ -97,8 +96,22 @@
           const initdata = datajson_elem.toJSON()
           const video_quizzes = this.mapVideoQuizzes(initdata, Array.from(quizcollect_elem.children))
 
+          console.log('>>>>>>>>>')
+          
           console.log('video_quizzes', video_quizzes)
+          console.log('quizcollect_elem', quizcollect_elem)
+          console.log('quizcollect_elem.children', quizcollect_elem.children)
+          
+          for (let item of quizcollect_elem.children) {
+            console.log(item);
+            item.setVideoPlayDelegate(this.playVideoSection.bind(this))
+          }
+
+
+
           console.log('quizcollect_elem.fee()', quizcollect_elem.setTitle('fee'))
+          console.log('this.playVideoSection', this.playVideoSection)
+          quizcollect_elem.setVideoPlayDelegate(this.playVideoSection.bind(this))
 
           quizcollect_elem.startQuiz()
 
@@ -106,8 +119,10 @@
             item.setAttribute('sectiontitle', 'fee')
           }
 
+
           this.set({
             data: initdata,
+            quiz_collection: quizcollect_elem,
           })
 
         }, 1)

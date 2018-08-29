@@ -28,16 +28,36 @@
     tag: 'ce-video',
 
     methods: {
-      playVideo() {
+      playSection(startsec, endsec) {
+        console.log('---------------')
+        
+        console.log('this', this)
+        
+        
+        const {youtubeplayer} = this.get()
+        
+        youtubeplayer.seekTo(startsec)
+        youtubeplayer.playVideo()
+        const interval = setInterval(() => {
+          if (
+            Number.parseFloat(youtubeplayer.getCurrentTime())
+            >= Number.parseFloat(endsec)
+            ||
+            Number.parseFloat(youtubeplayer.getCurrentTime())
+            <= Number.parseFloat(startsec)
+          ) {
+            youtubeplayer.pauseVideo()
+            clearInterval(interval)
+          }
+          
+        }, 1000)
+      },
+      seekPlayheadTo(time) {
 
       },
-      stopVideo() {
-
-      },
-      onPlayVideo() {
-
-      },
-      onStopVideo() {
+      pause(time) {
+        const {youtubeplayer} = this.get()
+        youtubeplayer.pauseVideo()
 
       },
     },
@@ -57,9 +77,6 @@
       window.onYouTubeIframeAPIReady = function() {
         const { videoid, playerid, data } = component.get()
 
-        console.log('component.refs.videoplayer', component.refs.videoplayer)
-        
-
         player = new YT.Player(playerid || component.refs.videoplayer, {
           height: '390',
           width: '640',
@@ -72,31 +89,14 @@
         });
       }
 
-      // 4. The API will call this function when the video player is ready.
-      function onPlayerReady(event) {
-        event.target.playVideo();
-      }
-
-      // 5. The API calls this function when the player's state changes.
-      //    The function indicates that when playing a video (state=1),
-      //    the player should play for six seconds and then stop.
-      var done = false;
+        const onPlayerReady = ((event) => {
+          this.set({ youtubeplayer: player })
+        })
 
       function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING && !done) {
-          setTimeout(stopVideo, 1000);
-          done = true;
-        }
-
-        // console.log('onPlayerStateCHange')      
-        // console.log('event', event)
-        // console.log('component', component)
-        
-        
-      }
-
-      function stopVideo() {
-        player.stopVideo();
+        // if (event.data == YT.PlayerState.PLAYING && !done) {
+        //   setTimeout(stopVideo, 1000);
+        // }
       }
 
     },
