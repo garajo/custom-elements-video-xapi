@@ -1,5 +1,9 @@
 <h3>{collectionTitle}</h3>
 <slot></slot>
+<br/>
+<br/>
+<br/>
+<button on:click="gradeQuiz()" >grade quiz</button>
 
 <script>
 
@@ -8,32 +12,32 @@ import './quiz-collections/True-False.html';
 import './quiz-collections/Multiple-Choice.html';
 import './quiz-collections/Mc-Option.html';
 
-
 export default {
   tag: 'quiz-collection',
   data() {
     return {
-      collectionTitle: 'temp',
+      collectionTitle: 'Collection Title',
     }
   },
   oncreate() {
     const [slot] = this.shadowRoot.querySelectorAll('slot')
     const slotLoadHandler = (e) => {
-        // console.log('e', e)
-        setTimeout(() => {
-          // console.log('this.children', this.children)
-          
-          // Array.from(this.children).forEach(ea => {
+      
+      
+      setTimeout(() => {
+        // console.log('this.children', this.children)
+        
+        // Array.from(this.children).forEach(ea => {
           //   console.log('ea', ea)
           //   console.log('ea', ea.tagName)
           // })
-        
+          
         }, 1)
-
-      slot.removeEventListener('slotchange', slotLoadHandler)
-    }
-
-    slot.addEventListener('slotchange', slotLoadHandler)
+        
+        slot.removeEventListener('slotchange', slotLoadHandler)
+      }
+      
+      slot.addEventListener('slotchange', slotLoadHandler)
   },
   methods: {
     setTitle(val) {
@@ -42,9 +46,22 @@ export default {
     startQuiz() {
       console.log('start quiz')
       console.log('this.children', this.children)
-       
+      
     },
     gradeQuiz() {
+      console.log('window.fetch', window.fetch)
+      console.log('fetch', fetch)
+
+      fetch('http://localhost:5001/answers/uuid-soetuh', {
+        method: 'POST',
+      })
+        .then(function (response) {
+          return response.json()
+        }).then(function (json) {
+          console.log('parsed json', json)
+        }).catch(function (ex) {
+          console.log('parsing failed', ex)
+        })
 
     },
     endQuiz() {

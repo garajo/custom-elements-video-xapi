@@ -7,6 +7,28 @@ import typescript from 'rollup-plugin-typescript2';
 import serve from 'rollup-plugin-serve'
 import livereload from 'rollup-plugin-livereload'
 
+import rollup_base from './rollup.base.config.js';
+
+console.log('rollup_base', rollup_base)
+
+console.log({...rollup_base})
+
+export default {
+  ...rollup_base,
+  plugins: [
+    ...rollup_base.plugins,
+    serve({
+      contentBase: 'public',
+      port: 5000
+    }),
+    livereload({
+      watch: 'public',
+      verbose: false,
+    }),
+  ]
+}
+
+/* 
 export default {
   input: 'src/main.ts',
   output: {
@@ -51,4 +73,6 @@ export default {
       verbose: false,
     }),
   ]
-};
+}; 
+
+*/

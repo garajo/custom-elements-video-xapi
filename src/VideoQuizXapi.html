@@ -102,18 +102,12 @@ console.log(starttime, endtime)
           console.log('quizcollect_elem', quizcollect_elem)
           console.log('quizcollect_elem.children', quizcollect_elem.children)
           
-          for (let item of quizcollect_elem.children) {
-            console.log(item);
-            item.setVideoPlayDelegate(this.playVideoSection.bind(this))
-          }
 
-
-
-          console.log('quizcollect_elem.fee()', quizcollect_elem.setTitle('fee'))
-          console.log('this.playVideoSection', this.playVideoSection)
-          quizcollect_elem.setVideoPlayDelegate(this.playVideoSection.bind(this))
-
-          quizcollect_elem.startQuiz()
+          
+          // for (let item of quizcollect_elem.children) {
+          //   console.log(item);
+          //   item.setVideoPlayDelegate(this.playVideoSection.bind(this))
+          // }
 
           for (let item of quizcollect_elem.children) {
             item.setAttribute('sectiontitle', 'fee')

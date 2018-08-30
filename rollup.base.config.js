@@ -1,17 +1,13 @@
-import rollup_base from './rollup.base.config.js';
+import commonjs from 'rollup-plugin-commonjs';
+import globals from 'rollup-plugin-node-globals';
+import builtins from 'rollup-plugin-node-builtins';
+import resolve from 'rollup-plugin-node-resolve';
+import svelte from 'rollup-plugin-svelte';
+import typescript from 'rollup-plugin-typescript2';
 import {
   terser,
 } from 'rollup-plugin-terser';
 
-export default {
-  ...rollup_base,
-  plugins: [
-    ...rollup_base.plugins,
-    terser()
-  ]
-}
-
-/* 
 export default {
   input: './src/main.ts',
   output: {
@@ -19,6 +15,9 @@ export default {
     format: 'iife',
     file: 'public/bundle.js',
     name: 'app'
+  },
+  moduleContext: {
+    [require.resolve('whatwg-fetch')]: 'window'
   },
   plugins: [
     commonjs({
@@ -39,6 +38,5 @@ export default {
       dev: true,
       customElement: true
     }),
-    terser()
   ]
-}; */
+};

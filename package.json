@@ -29,5 +29,8 @@
     "dev": "rollup -c ./rollup.dev.config.js -w",
     "start": "serve public"
   },
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.16.3",
+    "whatwg-fetch": "^2.0.4"
+  }
 }
