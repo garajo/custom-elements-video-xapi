@@ -1,9 +1,3 @@
-import commonjs from 'rollup-plugin-commonjs';
-import globals from 'rollup-plugin-node-globals';
-import builtins from 'rollup-plugin-node-builtins';
-import resolve from 'rollup-plugin-node-resolve';
-import svelte from 'rollup-plugin-svelte';
-import typescript from 'rollup-plugin-typescript2';
 import serve from 'rollup-plugin-serve'
 import livereload from 'rollup-plugin-livereload'
 
