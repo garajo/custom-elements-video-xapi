@@ -1,16 +1,30 @@
-<p>
-  <slot></slot>
-</p>
-<div>
-  <input name="true" type="checkbox" />
-  <label for="true" >true</label>
-  <input name="false" type="checkbox" />
-  <label for="false" >false</label>
-</div>
+<fieldset {id} >
+  <p>
+    <slot></slot>
+  </p>
+  <div ref:tfparent >
+    <input name="tf" type="radio" value=true />
+    <label for="true" >true</label>
+    <input name="tf" type="radio" value=false />
+    <label for="false" >false</label>
+  </div>
+</fieldset>
 
 <script>
   export default {
     tag: 'true-false',
+    data() {
+      return {
+        id: '',
+      }
+    },
+    methods: {
+      retrieveAnswer() {
+        const {id} = this.get()
+        const checkedelem = this.refs['tfparent'].querySelector('input[name="tf"]:checked')
+        return checkedelem ? { type: 'tf', answer: checkedelem.value } : { type: 'tf', answer: null }
+      },
+    }
   }
 
 

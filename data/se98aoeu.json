@@ -1,0 +1,17 @@
+[{
+    "type": "tf",
+    "answer": "true"
+  },
+  {
+    "type": "tf",
+    "answer": "true"
+  },
+  {
+    "type": "multiplechoice",
+    "subtype": "multi-select",
+    "answer": [
+      "head",
+      "body"
+    ]
+  }
+]

@@ -1,7 +1,90 @@
-<slot></slot>
+<fieldset {id} >
+  <p>{ type === 'single-select' ? 'Choose one': 'Check all that apply'}</p>
+  <slot></slot>
+</fieldset>
+
 
 <script>
   export default {
     tag: 'multiple-choice',
+    data() {
+      return {
+        // type: 'single-select', // single-select, multi-select
+      }
+    },
+    onstate() {
+      console.log(this.get())
+      
+    },
+    oncreate() {
+      const { type } = this.get()
+      console.log('type', type)
+      
+      
+      const self = this
+      
+      const [slot] = this.shadowRoot.querySelectorAll('slot')
+      const slotLoadHandler = (e) => {
+        setTimeout(() => {
+          
+          const {type} = self.get()
+          console.log('type', type)
+
+          
+          Array.from(this.children).forEach(ea => {
+            if (ea.tagName === 'MC-OPTION') {
+              const label = document.createElement('label')
+              label.setAttribute('for', 'mc-input')
+              label.appendChild(document.createTextNode(ea.textContent))
+              const input = document.createElement('input')
+              input.setAttribute('value', ea.getAttribute('value'))
+              if (type === 'single-select') {
+                input.setAttribute('name', 'mc-input')
+              } 
+              input.setAttribute('type', 'radio')
+  
+              ea.parentNode.appendChild(input)
+              ea.parentNode.appendChild(label)
+              ea.parentNode.removeChild(ea)
+            }
+          })
+
+
+        }, 1)
+        slot.removeEventListener('slotchange', slotLoadHandler)
+      }
+
+      slot.addEventListener('slotchange', slotLoadHandler)
+      
+    },
+    methods: {
+      retrieveAnswer() {
+        const { type } = this.get()
+        const checkedinputs = Array.from(this.querySelectorAll('input:checked'))
+        const submittedvals = checkedinputs.map(ea => ea.value)
+        
+        const retval = {
+              type: 'multiplechoice',
+            }
+            
+            if (type === 'single-select') {
+              return {
+                ...retval,
+                subtype: 'single-select',
+                answer: submittedvals[0],
+              }
+            }else {
+              return {
+                ...retval,
+                subtype: 'multi-select',
+                answer: submittedvals,
+            }
+          }
+
+        // console.log('type', type)
+        // console.log('--- end MC ----')
+      },
+    },
+
   }
 </script>

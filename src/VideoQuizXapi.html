@@ -2,7 +2,7 @@
 <VideoPlayer ref:vidplayer bind:videoid bind:playerid bind:data=starttimes>
   <p>embedded child of video</p>
 </VideoPlayer>
-<button on:click="playVideoSection(20, 25)" >button</button>
+<button on:click="playVideoSection(20, 25)" >play video section</button>
 <slot></slot>
 
 
@@ -54,7 +54,6 @@
 
     methods: {
       playVideoSection(starttime, endtime) {
-console.log(starttime, endtime)
         
         this.refs['vidplayer'].playSection(starttime, endtime)
       },
@@ -83,9 +82,10 @@ console.log(starttime, endtime)
         password: "<Test Password>",
         allowFail: false
       });
-      console.log('lrs', lrs)
+      // console.log('lrs', lrs)
 
-
+      // console.log('this.get()', this.get())
+      
 
       const [slot] = this.shadowRoot.querySelectorAll('slot')
       const slotLoadHandler = (e) => {
@@ -96,11 +96,11 @@ console.log(starttime, endtime)
           const initdata = datajson_elem.toJSON()
           const video_quizzes = this.mapVideoQuizzes(initdata, Array.from(quizcollect_elem.children))
 
-          console.log('>>>>>>>>>')
+          // console.log('>>>>>>>>>')
           
-          console.log('video_quizzes', video_quizzes)
-          console.log('quizcollect_elem', quizcollect_elem)
-          console.log('quizcollect_elem.children', quizcollect_elem.children)
+          // console.log('video_quizzes', video_quizzes)
+          // console.log('quizcollect_elem', quizcollect_elem)
+          // console.log('quizcollect_elem.children', quizcollect_elem.children)
           
 
           
@@ -108,10 +108,6 @@ console.log(starttime, endtime)
           //   console.log(item);
           //   item.setVideoPlayDelegate(this.playVideoSection.bind(this))
           // }
-
-          for (let item of quizcollect_elem.children) {
-            item.setAttribute('sectiontitle', 'fee')
-          }
 
 
           this.set({
@@ -130,21 +126,18 @@ console.log(starttime, endtime)
 
 
 
-    // onstate() {
-    //   console.log('onstate')
-    //   console.log(this.get())
-    //   const {
-    //     playerid,
-    //     videoid,
-    //   } = this.get()
-    //   console.log('playerid', playerid)
-    //   console.log('videoid', videoid)
+    onstate() {
+      // const {
+      //   playerid,
+      //   videoid,
+      // } = this.get()
 
-    // },
-    // onupdate() {
-    //   console.log('update', this.get())
-    // }
+      // console.log('VideoQuizXapi.onstate')
+      // console.log('this.get()', this.get())
+      
+      
 
+    },
 
 
   };

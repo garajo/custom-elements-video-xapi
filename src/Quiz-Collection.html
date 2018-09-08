@@ -1,5 +1,6 @@
-<h3>{collectionTitle}</h3>
-<slot></slot>
+<input type="hidden" name="answerid" value={answerid} />
+<h3>{title}</h3>
+<slot ></slot>
 <br/>
 <br/>
 <br/>
@@ -16,28 +17,13 @@ export default {
   tag: 'quiz-collection',
   data() {
     return {
-      collectionTitle: 'Collection Title',
+      title: 'Quizzes',
     }
   },
   oncreate() {
-    const [slot] = this.shadowRoot.querySelectorAll('slot')
-    const slotLoadHandler = (e) => {
-      
-      
-      setTimeout(() => {
-        // console.log('this.children', this.children)
-        
-        // Array.from(this.children).forEach(ea => {
-          //   console.log('ea', ea)
-          //   console.log('ea', ea.tagName)
-          // })
-          
-        }, 1)
-        
-        slot.removeEventListener('slotchange', slotLoadHandler)
-      }
-      
-      slot.addEventListener('slotchange', slotLoadHandler)
+    const { answerid } = this.get()
+    console.log('answerid', answerid)
+    
   },
   methods: {
     setTitle(val) {
@@ -49,13 +35,32 @@ export default {
       
     },
     gradeQuiz() {
-      console.log('window.fetch', window.fetch)
-      console.log('fetch', fetch)
+      console.log('gradeQuiz :::::::::::::')
+            
+      const answers = Array.from(this.children).map(ea => ea.retrieveAnswer())
+      
+      console.log('answers', answers)
+      
 
-      fetch('http://localhost:5001/answers/uuid-soetuh', {
-        method: 'POST',
+      const data = { fi: "fi" }
+
+      window.fetch('http://localhost:5001/answers/uuid-soetuh', {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, cors, *same-origin
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, same-origin, *omit
+        headers: {
+          // 'Accept': 'application/json',
+          'content-type': 'application/json'
+          // 'content-type': 'text/plain'
+        },
+        redirect: "follow", // manual, *follow, error
+        referrer: "no-referrer", // no-referrer, *client
+        body: JSON.stringify(answers), // body data type must match "Content-Type" header
       })
         .then(function (response) {
+          console.log('response', response)
+          
           return response.json()
         }).then(function (json) {
           console.log('parsed json', json)

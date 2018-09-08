@@ -21,13 +21,15 @@
 
   <div>
 
+    <!-- <div id="player"></div> -->
+
     <!--
-      <div id="player"></div> 
       <video-quiz-xapi videoid="EWLt6G85zC4" playerid="player" >
     -->
     <!-- videoid="EWLt6G85zC4" -->
     <!-- videoid="v756sSCfNe0" -->
     <!-- videoid="ItZN6o0ylao" -->
+    <!-- playerid="player" -->
     <video-quiz-xapi
       videoid="ItZN6o0ylao"
     >
@@ -90,28 +92,28 @@
         }
       ]
       </data-json>
-      <quiz-collection>
-          <true-false id="q1" >
+      <quiz-collection answerid="se98aoeu" title="Be an HTML expert!" >
+          <true-false >
             The <code>Doctype</code> tag is a signal to the browser to run traditional HTML
           </true-false>
           <true-false  id="q2" >
-            HTML is markup language, which is utilizes 'tags' to mark their boundaries.
+            HTML is markup language, which utilizes 'tags' to mark their boundaries.
           </true-false>
-          <multiple-choice id="q3" >
-            <p>Check all valid HTML tags</p>
-            <mc-option>
+          <multiple-choice id="q3" type="multi-select" >
+            <p>Which are standard element of html?</p>
+            <mc-option value="head" >
               head
             </mc-option>
-            
-            <mc-option>
+
+            <mc-option value="body" >
               body
             </mc-option>
-            
-            <mc-option>
+
+            <mc-option value="html" >
               html
             </mc-option>
 
-            <mc-option>
+            <mc-option value="tail" >
               tail
             </mc-option>
 
@@ -119,6 +121,7 @@
 
       </quiz-collection>
     </video-xapi>
+
   </div>
 
 </body>
