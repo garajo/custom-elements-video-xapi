@@ -22,7 +22,7 @@
       retrieveAnswer() {
         const {id} = this.get()
         const checkedelem = this.refs['tfparent'].querySelector('input[name="tf"]:checked')
-        return checkedelem ? { type: 'tf', answer: checkedelem.value } : { type: 'tf', answer: null }
+        return checkedelem ? { type: 'tf', answer: checkedelem.value } : { type: 'tf', answer: undefined }
       },
     }
   }

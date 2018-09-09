@@ -40,22 +40,29 @@ export default {
       
     },
     validateSaveAnswers(answers) {
-      console.log('answers', answers)
-      console.log(answers.filter(ea => {
-        console.log('ea', ea)
-      }))
+      const badanswers = 
+        answers.map(
+          ea => 
+            ea.answer === undefined || (Array.isArray(ea.answer) && ea.answer.length === 0 ) 
+            ? ea 
+            : undefined
+        )
       
+      return (badanswers.filter(ea => ea)).length ? { isvalid: false, debug: badanswers } : { isvalid: true }
     },
     saveAnswers() {
       console.log('save answers')
 
       const answers = Array.from(this.children).map(ea => ea.retrieveAnswer())
-      
-      console.log(this.validateSaveAnswers(answers))
-      
-      console.log('answers', answers)
+      const validate = this.validateSaveAnswers(answers)
+      if(validate.isvalid) {
+        
+        console.log('save answers', answers)
 
-      
+      }else {
+        const badanswers = validate.debug.map((ea, index) => ea === undefined ? `${index}: ok` : `${index}: ${JSON.stringify(ea.answer)}`)        
+        alert(`missing answers: ${JSON.stringify(badanswers, undefined, 2)}`)
+      }
     },
     gradeQuiz() {
       console.log('gradeQuiz :::::::::::::')
