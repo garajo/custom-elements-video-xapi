@@ -1,1 +1,1 @@
-import './VideoQuizXapi.html';
+import './App.html';

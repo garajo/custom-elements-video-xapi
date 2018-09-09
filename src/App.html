@@ -2,7 +2,9 @@
 <VideoPlayer ref:vidplayer bind:videoid bind:playerid bind:data=starttimes>
   <p>embedded child of video</p>
 </VideoPlayer>
-<button on:click="playVideoSection(20, 25)" >play video section</button>
+<div>
+  <button on:click="playVideoSection(20, 25)" >play video section</button>
+</div>
 <slot></slot>
 
 

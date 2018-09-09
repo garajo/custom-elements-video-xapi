@@ -1,61 +1,48 @@
 <fieldset {id} >
-  <p>{ type === 'single-select' ? 'Choose one': 'Check all that apply'}</p>
-  <slot></slot>
+  <p>{ mctype === 'single-select' ? 'Choose one': 'Check all that apply'}</p>
+  <slot ref:slot use:renderMC ></slot>
 </fieldset>
-
 
 <script>
   export default {
     tag: 'multiple-choice',
     data() {
       return {
-        // type: 'single-select', // single-select, multi-select
+        mctype: 'single-select', // single-select, multi-select
       }
     },
-    onstate() {
-      console.log(this.get())
-      
-    },
-    oncreate() {
-      const { type } = this.get()
-      console.log('type', type)
-      
-      
-      const self = this
-      
-      const [slot] = this.shadowRoot.querySelectorAll('slot')
-      const slotLoadHandler = (e) => {
-        setTimeout(() => {
-          
-          const {type} = self.get()
-          console.log('type', type)
-
-          
-          Array.from(this.children).forEach(ea => {
+    actions: {
+      renderMC(node) {
+        const self = this
+        const slotLoadHandler = (e) => {
+          const inputs = Array.from(this.children).map(ea => {
             if (ea.tagName === 'MC-OPTION') {
               const label = document.createElement('label')
               label.setAttribute('for', 'mc-input')
               label.appendChild(document.createTextNode(ea.textContent))
               const input = document.createElement('input')
               input.setAttribute('value', ea.getAttribute('value'))
-              if (type === 'single-select') {
-                input.setAttribute('name', 'mc-input')
-              } 
+              input.setAttribute('name', 'mc-input')
               input.setAttribute('type', 'radio')
-  
               ea.parentNode.appendChild(input)
               ea.parentNode.appendChild(label)
               ea.parentNode.removeChild(ea)
+              return input
             }
           })
-
-
-        }, 1)
-        slot.removeEventListener('slotchange', slotLoadHandler)
+          node.removeEventListener('slotchange', slotLoadHandler)
+          self.set({inputs: inputs.filter(Boolean)})
+        }
+        node.addEventListener('slotchange', slotLoadHandler)
       }
-
-      slot.addEventListener('slotchange', slotLoadHandler)
-      
+    },
+    onstate() {
+      const {mctype, inputs} = this.get()
+      if(mctype === 'multi-select' && inputs) {
+        inputs.forEach(ea => {
+          ea.setAttribute('type', 'checkbox')
+        })
+      }
     },
     methods: {
       retrieveAnswer() {
@@ -80,9 +67,6 @@
                 answer: submittedvals,
             }
           }
-
-        // console.log('type', type)
-        // console.log('--- end MC ----')
       },
     },
 

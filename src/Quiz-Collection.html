@@ -1,10 +1,12 @@
 <input type="hidden" name="answerid" value={answerid} />
 <h3>{title}</h3>
 <slot ></slot>
-<br/>
-<br/>
-<br/>
-<button on:click="gradeQuiz()" >grade quiz</button>
+<div>
+  <button on:click="gradeQuiz()" >grade quiz</button>
+</div>
+<div>
+  <button on:click="saveAnswers()" >save answers</button>
+</div>
 
 <script>
 
@@ -20,11 +22,14 @@ export default {
       title: 'Quizzes',
     }
   },
-  oncreate() {
-    const { answerid } = this.get()
-    console.log('answerid', answerid)
+  // onstate() {
+  //   console.log('this.get()', this.get())
     
-  },
+  // },
+  // oncreate() {
+  //   console.log('this.get()', this.get())
+    
+  // },
   methods: {
     setTitle(val) {
       this.set({ collectionTitle: val })
@@ -32,6 +37,24 @@ export default {
     startQuiz() {
       console.log('start quiz')
       console.log('this.children', this.children)
+      
+    },
+    validateSaveAnswers(answers) {
+      console.log('answers', answers)
+      console.log(answers.filter(ea => {
+        console.log('ea', ea)
+      }))
+      
+    },
+    saveAnswers() {
+      console.log('save answers')
+
+      const answers = Array.from(this.children).map(ea => ea.retrieveAnswer())
+      
+      console.log(this.validateSaveAnswers(answers))
+      
+      console.log('answers', answers)
+
       
     },
     gradeQuiz() {
