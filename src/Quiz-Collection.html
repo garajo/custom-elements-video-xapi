@@ -15,6 +15,27 @@ import './quiz-collections/True-False.html';
 import './quiz-collections/Multiple-Choice.html';
 import './quiz-collections/Mc-Option.html';
 
+function goFetch(path, bodyobj, cb) {
+  window.fetch(`http://localhost:5001/${path}`, {
+    method: "POST", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, cors, *same-origin
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "same-origin", // include, same-origin, *omit
+    headers: {
+      // 'Accept': 'application/json',
+      'content-type': 'application/json'
+      // 'content-type': 'text/plain'
+    },
+    redirect: "follow", // manual, *follow, error
+    referrer: "no-referrer", // no-referrer, *client
+    body: JSON.stringify(bodyobj), // body data type must match "Content-Type" header
+  })
+  .then(cb)
+  .catch(function (ex) {
+    console.log('parsing failed', ex)
+  })
+}
+
 export default {
   tag: 'quiz-collection',
   data() {
@@ -51,13 +72,16 @@ export default {
       return (badanswers.filter(ea => ea)).length ? { isvalid: false, debug: badanswers } : { isvalid: true }
     },
     saveAnswers() {
-      console.log('save answers')
-
       const answers = Array.from(this.children).map(ea => ea.retrieveAnswer())
       const validate = this.validateSaveAnswers(answers)
       if(validate.isvalid) {
         
         console.log('save answers', answers)
+        
+        goFetch('saveanswers/uuid-soetuh', answers, async (response) => {
+          console.log('response', await response.json())
+        })
+
 
       }else {
         const badanswers = validate.debug.map((ea, index) => ea === undefined ? `${index}: ok` : `${index}: ${JSON.stringify(ea.answer)}`)        
@@ -66,37 +90,12 @@ export default {
     },
     gradeQuiz() {
       console.log('gradeQuiz :::::::::::::')
-            
       const answers = Array.from(this.children).map(ea => ea.retrieveAnswer())
-      
-      console.log('answers', answers)
-      
-
       const data = { fi: "fi" }
 
-      window.fetch('http://localhost:5001/answers/uuid-soetuh', {
-        method: "POST", // *GET, POST, PUT, DELETE, etc.
-        mode: "cors", // no-cors, cors, *same-origin
-        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: "same-origin", // include, same-origin, *omit
-        headers: {
-          // 'Accept': 'application/json',
-          'content-type': 'application/json'
-          // 'content-type': 'text/plain'
-        },
-        redirect: "follow", // manual, *follow, error
-        referrer: "no-referrer", // no-referrer, *client
-        body: JSON.stringify(answers), // body data type must match "Content-Type" header
+      goFetch('answers/uuid-soetuh', answers, async (response) => {
+        console.log('response', await response.json())
       })
-        .then(function (response) {
-          console.log('response', response)
-          
-          return response.json()
-        }).then(function (json) {
-          console.log('parsed json', json)
-        }).catch(function (ex) {
-          console.log('parsing failed', ex)
-        })
 
     },
     endQuiz() {
