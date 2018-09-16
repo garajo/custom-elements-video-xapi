@@ -1,97 +1,108 @@
 <input type="hidden" name="answerid" value={answerid} />
 <h3>{title}</h3>
-<slot ></slot>
+<slot></slot>
 <div>
-  <button on:click="gradeQuiz()" >grade quiz</button>
+  <button on:click="gradeQuiz()">grade quiz</button>
 </div>
 <div>
-  <button style="background-color: #f00;" on:click="saveAnswers()" >save answers</button>
+  <button style="background-color: #f00;" on:click="saveAnswers()">save answers</button>
 </div>
 
 <script>
+  import './quiz-collections/QuizSection.html';
+  import './quiz-collections/True-False.html';
+  import './quiz-collections/Multiple-Choice.html';
+  import './quiz-collections/Mc-Option.html';
 
-import './quiz-collections/QuizSection.html';
-import './quiz-collections/True-False.html';
-import './quiz-collections/Multiple-Choice.html';
-import './quiz-collections/Mc-Option.html';
+  function goFetch(path, bodyobj, cb) {
+    window.fetch(`http://localhost:5001/${path}`, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, cors, *same-origin
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, same-origin, *omit
+        headers: {
+          'content-type': 'application/json'
+        },
+        redirect: "follow",
+        referrer: "no-referrer",
+        body: JSON.stringify(bodyobj),
+      })
+      .then(cb)
+      .catch(function (ex) {
+        console.log('parsing failed', ex)
+      })
+  }
 
-function goFetch(path, bodyobj, cb) {
-  window.fetch(`http://localhost:5001/${path}`, {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, cors, *same-origin
-    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "same-origin", // include, same-origin, *omit
-    headers: {
-      'content-type': 'application/json'
-    },
-    redirect: "follow",
-    referrer: "no-referrer",
-    body: JSON.stringify(bodyobj),
-  })
-  .then(cb)
-  .catch(function (ex) {
-    console.log('parsing failed', ex)
-  })
-}
-
-export default {
-  tag: 'quiz-collection',
-  data() {
-    return {
-      title: 'Quizzes',
-    }
-  },
-  methods: {
-    setTitle(val) {
-      this.set({ collectionTitle: val })
-    },
-    startQuiz() {
-      console.log('start quiz')
-      console.log('this.children', this.children)
-      
-    },
-    validateSaveAnswers(answers) {
-      const badanswers = 
-        answers.map(
-          ea => 
-            ea.answer === undefined || (Array.isArray(ea.answer) && ea.answer.length === 0 ) 
-            ? ea 
-            : undefined
-        )
-      
-      return (badanswers.filter(ea => ea)).length ? { isvalid: false, debug: badanswers } : { isvalid: true }
-    },
-    saveAnswers() {
-      const answers = Array.from(this.children).map(ea => ea.retrieveAnswer())
-      const validate = this.validateSaveAnswers(answers)
-      if(validate.isvalid) {
-        goFetch('saveanswers/uuid-soetuh', answers, async (response) => {
-          console.log('saved answers', await response.json())
-          alert('Your answers were saved')
-        })
-
-      }else {
-        const badanswers = validate.debug.map((ea, index) => ea === undefined ? `${index}: ok` : `${index}: ${JSON.stringify(ea.answer)}`)
-        alert(`missing answers: ${JSON.stringify(badanswers, undefined, 2)}`)
+  export default {
+    tag: 'quiz-collection',
+    data() {
+      return {
+        title: 'Quizzes',
       }
     },
-    gradeQuiz() {
-      const answers = Array.from(this.children).map(ea => ea.retrieveAnswer())
-      
-      goFetch('answers/uuid-soetuh', answers, async (response) => {
-        const { error, grade } = await response.json()
-        if (error) {
-          console.error(error)
-          alert('Couldn\'t find your answer sheet. Have you saved your answer yet?')
-        }else {
-          alert(`You got ${grade.correctAnswers} correct answers and a grade of ${Math.round(grade.total * 100)}%`)
-        }
-      })
-    },
-    endQuiz() {
+    methods: {
+      setTitle(val) {
+        this.set({
+          collectionTitle: val
+        })
+      },
+      startQuiz() {
+        console.log('start quiz')
+        console.log('this.children', this.children)
 
+      },
+      validateSaveAnswers(answers) {
+        const badanswers =
+          answers.map(
+            ea =>
+            ea.answer === undefined || (Array.isArray(ea.answer) && ea.answer.length === 0) ?
+            ea :
+            undefined
+          )
+
+        return (badanswers.filter(ea => ea)).length ? {
+          isvalid: false,
+          debug: badanswers
+        } : {
+          isvalid: true
+        }
+      },
+      saveAnswers() {
+        const answers = Array.from(this.children).map(ea => ea.retrieveAnswer())
+        const validate = this.validateSaveAnswers(answers)
+        if (validate.isvalid) {
+          goFetch('saveanswers/uuid-soetuh', answers, async (response) => {
+            console.log('saved answers', await response.json())
+            alert('Your answers were saved')
+          })
+
+        } else {
+          const badanswers = validate.debug.map((ea, index) => ea === undefined ? `${index}: ok` :
+            `${index}: ${JSON.stringify(ea.answer)}`)
+          alert(`missing answers: ${JSON.stringify(badanswers, undefined, 2)}`)
+        }
+      },
+      gradeQuiz() {
+        const answers = Array.from(this.children).map(ea => ea.retrieveAnswer())
+
+        goFetch('answers/uuid-soetuh', answers, async (response) => {
+          const {
+            error,
+            grade
+          } = await response.json()
+          if (error) {
+            console.error(error)
+            alert('Couldn\'t find your answer sheet. Have you saved your answer yet?')
+          } else {
+            alert(
+              `You got ${grade.correctAnswers} correct answers and a grade of ${Math.round(grade.total * 100)}%`
+            )
+          }
+        })
+      },
+      endQuiz() {
+
+      }
     }
   }
-}
-
 </script>

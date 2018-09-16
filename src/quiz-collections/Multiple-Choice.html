@@ -1,6 +1,6 @@
-<fieldset {id} >
+<fieldset {id}>
   <p>{ mctype === 'single-select' ? 'Choose one': 'Check all that apply'}</p>
-  <slot ref:slot use:renderMC ></slot>
+  <slot ref:slot use:renderMC></slot>
 </fieldset>
 
 <script>
@@ -31,14 +31,19 @@
             }
           })
           node.removeEventListener('slotchange', slotLoadHandler)
-          self.set({inputs: inputs.filter(Boolean)})
+          self.set({
+            inputs: inputs.filter(Boolean)
+          })
         }
         node.addEventListener('slotchange', slotLoadHandler)
       }
     },
     onstate() {
-      const {mctype, inputs} = this.get()
-      if(mctype === 'multi-select' && inputs) {
+      const {
+        mctype,
+        inputs
+      } = this.get()
+      if (mctype === 'multi-select' && inputs) {
         inputs.forEach(ea => {
           ea.setAttribute('type', 'checkbox')
         })
@@ -46,27 +51,29 @@
     },
     methods: {
       retrieveAnswer() {
-        const { type } = this.get()
+        const {
+          type
+        } = this.get()
         const checkedinputs = Array.from(this.querySelectorAll('input:checked'))
         const submittedvals = checkedinputs.map(ea => ea.value)
-        
+
         const retval = {
           type: 'multiplechoice',
         }
-        
+
         if (type === 'single-select') {
           return {
             ...retval,
             subtype: 'single-select',
             answer: submittedvals[0],
           }
-        }else {
+        } else {
           return {
             ...retval,
             subtype: 'multi-select',
             answer: submittedvals,
+          }
         }
-      }
       },
     },
 

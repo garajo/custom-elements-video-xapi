@@ -1,12 +1,11 @@
 <slot></slot>
 <!-- Why is the below element not available oncreate? -->
-<div ref:videoplayer ></div>
+<div ref:videoplayer></div>
 
 <quiz-component></quiz-component>
 
 
 <style>
-
   p {
     color: blue;
   }
@@ -15,35 +14,37 @@
 <script src="https://www.youtube.com/iframe_api"></script>
 
 <script>
-
   export default {
     tag: 'ce-video',
 
     methods: {
       playSection(startsec, endsec) {
-        const {youtubeplayer} = this.get()
-        
+        const {
+          youtubeplayer
+        } = this.get()
+
         youtubeplayer.seekTo(startsec)
         youtubeplayer.playVideo()
         const interval = setInterval(() => {
           if (
-            Number.parseFloat(youtubeplayer.getCurrentTime())
-            >= Number.parseFloat(endsec)
-            ||
-            Number.parseFloat(youtubeplayer.getCurrentTime())
-            <= Number.parseFloat(startsec)
+            Number.parseFloat(youtubeplayer.getCurrentTime()) >=
+            Number.parseFloat(endsec) ||
+            Number.parseFloat(youtubeplayer.getCurrentTime()) <=
+            Number.parseFloat(startsec)
           ) {
             youtubeplayer.pauseVideo()
             clearInterval(interval)
           }
-          
+
         }, 1000)
       },
       seekPlayheadTo(time) {
 
       },
       pause(time) {
-        const {youtubeplayer} = this.get()
+        const {
+          youtubeplayer
+        } = this.get()
         youtubeplayer.pauseVideo()
 
       },
@@ -53,22 +54,28 @@
       // // why doesn't the effin below work?
       // console.log('WTF:', document.getElementsByClassName('loc_player'))
       // const wtfdebug = document.getElementsByTagName("div")
-      
+
       const component = this
       var player;
-      
+
       var tag = document.createElement('script');
       tag.src = "https://www.youtube.com/iframe_api";
       document.body.appendChild(tag)
 
-      window.onYouTubeIframeAPIReady = function() {
-        const { videoid, playerid, data } = component.get()
+      window.onYouTubeIframeAPIReady = function () {
+        const {
+          videoid,
+          playerid,
+          data
+        } = component.get()
 
         player = new YT.Player(playerid || component.refs.videoplayer, {
           height: '390',
           width: '640',
           videoId: videoid,
-          playerVars: { 'controls': 1 },
+          playerVars: {
+            'controls': 1
+          },
           events: {
             'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
@@ -76,9 +83,11 @@
         });
       }
 
-        const onPlayerReady = ((event) => {
-          this.set({ youtubeplayer: player })
+      const onPlayerReady = ((event) => {
+        this.set({
+          youtubeplayer: player
         })
+      })
 
       function onPlayerStateChange(event) {
         // if (event.data == YT.PlayerState.PLAYING && !done) {

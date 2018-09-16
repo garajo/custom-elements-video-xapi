@@ -6,13 +6,16 @@
     tag: 'quiz-section',
     methods: {
       setVideoPlayDelegate(fn) {
-        console.log('fn', fn)
-        
-        this.set({ video_review_playback: fn })
-        
+
+        this.set({
+          video_review_playback: fn
+        })
+
       },
       reviewVideo() {
-        const { video_review_playback } = this.get()
+        const {
+          video_review_playback
+        } = this.get()
         // video_review_playback.call(40, 45)
       },
     }

@@ -1,9 +1,8 @@
-
 <VideoPlayer ref:vidplayer bind:videoid bind:playerid bind:data=starttimes>
   <p>embedded child of video</p>
 </VideoPlayer>
 <div>
-  <button on:click="playVideoSection(20, 25)" >play video section</button>
+  <button on:click="playVideoSection(20, 25)">play video section</button>
 </div>
 <slot></slot>
 <pre>Stuff in <span style="background-color:#f00;">red</span> need to be behind admin auth and paywall</pre>
@@ -56,22 +55,21 @@
 
     methods: {
       playVideoSection(starttime, endtime) {
-        
+
         this.refs['vidplayer'].playSection(starttime, endtime)
       },
       mapVideoQuizzes(src, arr) {
-        return src.map(ea => (
-            {
-              ...ea,
-               sectionQuizzes: arr.reduce(
-                (acc, val) => {
-                  if (Number.parseInt(val.getAttribute('contentIndex')) === Number.parseInt(ea.contentIndex)) return acc.concat(val)
-                  return acc
-                },
-                [],
-              ),
-            }
-          ))
+        return src.map(ea => ({
+          ...ea,
+          sectionQuizzes: arr.reduce(
+            (acc, val) => {
+              if (Number.parseInt(val.getAttribute('contentIndex')) === Number.parseInt(ea.contentIndex)) return acc
+                .concat(val)
+              return acc
+            },
+            [],
+          ),
+        }))
       },
     },
 
@@ -87,7 +85,7 @@
       // console.log('lrs', lrs)
 
       // console.log('this.get()', this.get())
-      
+
 
       const [slot] = this.shadowRoot.querySelectorAll('slot')
       const slotLoadHandler = (e) => {
@@ -99,13 +97,13 @@
           const video_quizzes = this.mapVideoQuizzes(initdata, Array.from(quizcollect_elem.children))
 
           // console.log('>>>>>>>>>')
-          
+
           // console.log('video_quizzes', video_quizzes)
           // console.log('quizcollect_elem', quizcollect_elem)
           // console.log('quizcollect_elem.children', quizcollect_elem.children)
-          
 
-          
+
+
           // for (let item of quizcollect_elem.children) {
           //   console.log(item);
           //   item.setVideoPlayDelegate(this.playVideoSection.bind(this))
@@ -136,8 +134,8 @@
 
       // console.log('VideoQuizXapi.onstate')
       // console.log('this.get()', this.get())
-      
-      
+
+
 
     },
 

@@ -1,12 +1,12 @@
-<fieldset {id} >
+<fieldset {id}>
   <p>
     <slot></slot>
   </p>
-  <div ref:tfparent >
+  <div ref:tfparent>
     <input name="tf" type="radio" value=true />
-    <label for="true" >true</label>
+    <label for="true">true</label>
     <input name="tf" type="radio" value=false />
-    <label for="false" >false</label>
+    <label for="false">false</label>
   </div>
 </fieldset>
 
@@ -20,12 +20,18 @@
     },
     methods: {
       retrieveAnswer() {
-        const {id} = this.get()
+        const {
+          id
+        } = this.get()
         const checkedelem = this.refs['tfparent'].querySelector('input[name="tf"]:checked')
-        return checkedelem ? { type: 'tf', answer: checkedelem.value } : { type: 'tf', answer: undefined }
+        return checkedelem ? {
+          type: 'tf',
+          answer: checkedelem.value
+        } : {
+          type: 'tf',
+          answer: undefined
+        }
       },
     }
   }
-
-
 </script>
