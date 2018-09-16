@@ -66,17 +66,16 @@ export default {
       const validate = this.validateSaveAnswers(answers)
       if(validate.isvalid) {
         goFetch('saveanswers/uuid-soetuh', answers, async (response) => {
-          console.log('response', await response.json())
+          console.log('saved answers', await response.json())
+          alert('Your answers were saved')
         })
 
-
       }else {
-        const badanswers = validate.debug.map((ea, index) => ea === undefined ? `${index}: ok` : `${index}: ${JSON.stringify(ea.answer)}`)        
+        const badanswers = validate.debug.map((ea, index) => ea === undefined ? `${index}: ok` : `${index}: ${JSON.stringify(ea.answer)}`)
         alert(`missing answers: ${JSON.stringify(badanswers, undefined, 2)}`)
       }
     },
     gradeQuiz() {
-      console.log('gradeQuiz :::::::::::::')
       const answers = Array.from(this.children).map(ea => ea.retrieveAnswer())
       
       goFetch('answers/uuid-soetuh', answers, async (response) => {

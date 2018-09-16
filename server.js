@@ -12,8 +12,6 @@ app.use('/answers/:id', bodyParser.json(), (req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Accept, Origin, Content-Type, access_token')
   res.header('Access-Control-Allow-Credentials', 'true')
 
-  console.log('req.params.id', req.params.id)
-
   switch (req.method) {
     case "OPTIONS":
       res.sendStatus(200)
@@ -21,7 +19,6 @@ app.use('/answers/:id', bodyParser.json(), (req, res, next) => {
     case "POST":
       fs.readFile(`data/${req.params.id}.json`, (err, data) => {
         if (err) throw err
-
 
           if (req.body) {
             res.json({
@@ -36,7 +33,6 @@ app.use('/answers/:id', bodyParser.json(), (req, res, next) => {
       break
   }
 })
-
 
 app.use('/saveanswers/:id', bodyParser.json(),(req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
