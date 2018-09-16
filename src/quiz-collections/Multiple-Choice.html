@@ -51,22 +51,22 @@
         const submittedvals = checkedinputs.map(ea => ea.value)
         
         const retval = {
-              type: 'multiplechoice',
-            }
-            
-            if (type === 'single-select') {
-              return {
-                ...retval,
-                subtype: 'single-select',
-                answer: submittedvals[0],
-              }
-            }else {
-              return {
-                ...retval,
-                subtype: 'multi-select',
-                answer: submittedvals,
-            }
+          type: 'multiplechoice',
+        }
+        
+        if (type === 'single-select') {
+          return {
+            ...retval,
+            subtype: 'single-select',
+            answer: submittedvals[0],
           }
+        }else {
+          return {
+            ...retval,
+            subtype: 'multi-select',
+            answer: submittedvals,
+        }
+      }
       },
     },
 

@@ -2,47 +2,67 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const fs = require('fs')
+const { equallyGraded } = require('./lib/grading.js')
 
 const validateComponentId = (id) => id
 
 app.use('/answers/:id', bodyParser.json(), (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Accept, Origin, Content-Type, access_token');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  
-  console.log('req', req)
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Methods', 'POST, OPTIONS')
+  res.header('Access-Control-Allow-Headers', 'Accept, Origin, Content-Type, access_token')
+  res.header('Access-Control-Allow-Credentials', 'true')
+
   console.log('req.params.id', req.params.id)
-  console.log(req.body)
-  console.log(JSON.stringify(req.body, null, 2))
-  
-  fs.readFile(`data/${req.params.id}.json`, (err, data) => {
-    if (err) throw err;
-    console.log(JSON.parse(data));
 
-    if (req.body) {
-      res.json({ "answers": JSON.parse(data.toString()) });
-    }
+  switch (req.method) {
+    case "OPTIONS":
+      res.sendStatus(200)
+      break
+    case "POST":
+      fs.readFile(`data/${req.params.id}.json`, (err, data) => {
+        if (err) throw err
 
 
-  });
-  
-  
+          if (req.body) {
+            res.json({
+              answers: JSON.parse(data.toString()),
+              grade: equallyGraded(JSON.parse(data), req.body),
+            })
+          }
+        })
+      break
+    default:
+      res.redirect('/404')
+      break
+  }
 })
 
 
 app.use('/saveanswers/:id', bodyParser.json(),(req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Accept, Origin, Content-Type, access_token');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  
-  fs.writeFile(`data/${validateComponentId(req.params.id)}.json`, JSON.stringify(req.body), (err) => {
-    if (err) throw err;
-    console.log('The file has been saved!');
-    
-    res.send('saved:' + JSON.stringify(req.body))
-  })
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Methods', 'POST, OPTIONS')
+  res.header('Access-Control-Allow-Headers', 'Accept, Content-Type, access_token')
+  res.header('Access-Control-Allow-Credentials', 'true')
+
+  switch (req.method) {
+    case "OPTIONS":
+      res.sendStatus(200)
+      break
+    case "POST":
+      fs.writeFile(`data/${validateComponentId(req.params.id)}.json`, JSON.stringify(req.body), (err) => {
+        if (err) throw err
+        console.log('The file has been saved!')
+        res.json({ "saved": req.body })
+      })
+      break
+    default:
+      res.redirect('/404')
+      break
+  }
+})
+
+app.get('/404', (req, res, next) => {
+  res.send('page not found')
 })
 
 app.listen(5001)

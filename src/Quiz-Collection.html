@@ -22,13 +22,11 @@ function goFetch(path, bodyobj, cb) {
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
     credentials: "same-origin", // include, same-origin, *omit
     headers: {
-      // 'Accept': 'application/json',
       'content-type': 'application/json'
-      // 'content-type': 'text/plain'
     },
-    redirect: "follow", // manual, *follow, error
-    referrer: "no-referrer", // no-referrer, *client
-    body: JSON.stringify(bodyobj), // body data type must match "Content-Type" header
+    redirect: "follow",
+    referrer: "no-referrer",
+    body: JSON.stringify(bodyobj),
   })
   .then(cb)
   .catch(function (ex) {
@@ -43,14 +41,6 @@ export default {
       title: 'Quizzes',
     }
   },
-  // onstate() {
-  //   console.log('this.get()', this.get())
-    
-  // },
-  // oncreate() {
-  //   console.log('this.get()', this.get())
-    
-  // },
   methods: {
     setTitle(val) {
       this.set({ collectionTitle: val })
@@ -75,9 +65,6 @@ export default {
       const answers = Array.from(this.children).map(ea => ea.retrieveAnswer())
       const validate = this.validateSaveAnswers(answers)
       if(validate.isvalid) {
-        
-        console.log('save answers', answers)
-        
         goFetch('saveanswers/uuid-soetuh', answers, async (response) => {
           console.log('response', await response.json())
         })
@@ -91,8 +78,7 @@ export default {
     gradeQuiz() {
       console.log('gradeQuiz :::::::::::::')
       const answers = Array.from(this.children).map(ea => ea.retrieveAnswer())
-      const data = { fi: "fi" }
-
+      
       goFetch('answers/uuid-soetuh', answers, async (response) => {
         console.log('response', await response.json())
       })
