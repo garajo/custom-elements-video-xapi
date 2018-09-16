@@ -79,13 +79,17 @@ export default {
       const answers = Array.from(this.children).map(ea => ea.retrieveAnswer())
       
       goFetch('answers/uuid-soetuh', answers, async (response) => {
-        const { grade } = await response.json()
-        alert(`You got ${grade.correctAnswers} correct answers and a grade of ${Math.round(grade.total * 100)}%`)
+        const { error, grade } = await response.json()
+        if (error) {
+          console.error(error)
+          alert('Couldn\'t find your answer sheet. Have you saved your answer yet?')
+        }else {
+          alert(`You got ${grade.correctAnswers} correct answers and a grade of ${Math.round(grade.total * 100)}%`)
+        }
       })
-
     },
     endQuiz() {
-      
+
     }
   }
 }

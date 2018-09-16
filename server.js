@@ -17,16 +17,18 @@ app.use('/answers/:id', bodyParser.json(), (req, res, next) => {
       res.sendStatus(200)
       break
     case "POST":
-      fs.readFile(`data/${req.params.id}.json`, (err, data) => {
-        if (err) throw err
-
-          if (req.body) {
-            res.json({
-              answers: JSON.parse(data.toString()),
-              grade: equallyGraded(JSON.parse(data), req.body),
-            })
-          }
-        })
+      fs.readFile(`data/${req.params.id}.json`, (error, data) => {
+        if (error) {
+          console.log('error', error)
+          res.send({ error })
+        }
+        else if (req.body) {
+          res.json({
+            answers: JSON.parse(data.toString()),
+            grade: equallyGraded(JSON.parse(data), req.body),
+          })
+        }
+      })
       break
     default:
       res.redirect('/404')
