@@ -80,7 +80,8 @@ export default {
       const answers = Array.from(this.children).map(ea => ea.retrieveAnswer())
       
       goFetch('answers/uuid-soetuh', answers, async (response) => {
-        console.log('response', await response.json())
+        const { grade } = await response.json()
+        alert(`You got ${grade.correctAnswers} correct answers and a grade of ${Math.round(grade.total * 100)}%`)
       })
 
     },
