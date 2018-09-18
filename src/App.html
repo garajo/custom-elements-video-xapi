@@ -89,10 +89,23 @@
           mbox: "mailto:info@tincanapi.com"
         },
         verb: {
-          id: "http://adlnet.gov/expapi/verbs/launched"
+          id: "http://adlnet.gov/expapi/verbs/launched",
+          display: {
+            en: "launched",
+          }
         },
-        target: {
-          id: "http://example.com/video-quiz"
+        object: {
+          id: "http://example.com/video-quiz",
+          definition: {
+            name: {
+              "en-US": "Video Quiz exercise"
+            },
+            description: {
+              "en-US": "Using xapi with a video quiz custom element components"
+            },
+            type: "http://activitystrea.ms/schema/1.0/page"
+          },
+          objectType: "Activity"
         }
       });
 
