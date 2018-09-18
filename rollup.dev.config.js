@@ -11,12 +11,12 @@ export default {
   ...rollup_base,
   plugins: [
     ...rollup_base.plugins,
-    serve({
-      contentBase: 'public',
-      port: 5000
-    }),
+    // serve({
+    //   contentBase: 'public',
+    //   port: 5000
+    // }),
     livereload({
-      watch: 'public',
+      watch: ['public'],
       verbose: false,
     }),
   ]

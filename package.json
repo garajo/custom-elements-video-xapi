@@ -29,8 +29,8 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "npm run dev-server & rollup -c ./rollup.dev.config.js -w",
-    "dev-server": "nodemon --watch ./server.js --watch lib/ --inspect ./server.js",
-    "start": "serve public"
+    "dev-server": "nodemon --inspect --watch ./server.js --watch lib/ ./server.js",
+    "start": "npm run build && node ./server.js"
   },
   "dependencies": {
     "express": "^4.16.3",

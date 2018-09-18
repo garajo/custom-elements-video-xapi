@@ -8,6 +8,8 @@ const {
 
 const validateComponentId = (id) => id
 
+app.use(express.static('public'))
+
 app.use('/answers/:id', bodyParser.json(), (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Methods', 'POST, OPTIONS')
