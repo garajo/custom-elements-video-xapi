@@ -29,11 +29,6 @@
   import './util/Json.html'
   import './Quiz-Collection.html';
   import TinCan from 'tincanjs'
-  import {
-    StringValidator
-  } from './util/validation'
-
-
 
   export default {
     tag: 'video-quiz-xapi',
@@ -75,7 +70,6 @@
 
     oncreate() {
 
-      const outstr = StringValidator('xx')
       const lrs = new TinCan.LRS({
         endpoint: "https://cloud.scorm.com/tc/public/",
         username: "<Test User>",

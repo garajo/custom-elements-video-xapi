@@ -32,6 +32,7 @@ export default {
     }),
     typescript({
       typescript: require('typescript'),
+      tsconfig: './tsconfig.json',
     }),
     svelte({
       // enable run-time checks when not in production
