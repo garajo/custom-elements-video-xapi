@@ -5,8 +5,8 @@
 Use this when you're writing new happy code!
 
 ```bash
-git clone git@github.com:garajo/ce-video-xapi.git
-cd ce-video-xapi
+git clone git@github.com:garajo/custom-elements-video-xapi.git
+cd custom-elements-video-xapi
 npm install
 npm run dev
 ```
