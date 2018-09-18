@@ -70,13 +70,52 @@
 
     oncreate() {
 
-      const lrs = new TinCan.LRS({
-        endpoint: "https://cloud.scorm.com/tc/public/",
-        username: "<Test User>",
-        password: "<Test Password>",
-        allowFail: false
+      var lrs;
+
+      try {
+        lrs = new TinCan.LRS({
+          endpoint: "https://cloud.scorm.com/tc/public/", // https://xapi.com/wp-content/assets/ClientPrototypes/StatementViewer/index.html
+          username: "<Test User>",
+          password: "<Test Password>",
+          allowFail: false
+        });
+      } catch (ex) {
+        console.log("Failed to setup LRS object: ", ex);
+        // TODO: do something with error, can't communicate with LRS
+      }
+
+      var statement = new TinCan.Statement({
+        actor: {
+          mbox: "mailto:info@tincanapi.com"
+        },
+        verb: {
+          id: "http://adlnet.gov/expapi/verbs/attempted"
+        },
+        target: {
+          id: "http://rusticisoftware.github.com/TinCanJS"
+        }
       });
-      // console.log('lrs', lrs)
+
+      lrs.saveStatement(
+        statement, {
+          callback: function (err, xhr) {
+            if (err !== null) {
+              if (xhr !== null) {
+                console.log("Failed to save statement: " + xhr.responseText + " (" + xhr.status + ")");
+                // TODO: do something with error, didn't save statement
+                return;
+              }
+
+              console.log("Failed to save statement: " + err);
+              // TODO: do something with error, didn't save statement
+              return;
+            }
+
+            console.log("Statement saved");
+            // TOOO: do something with success (possibly ignore)
+          }
+        }
+      );
 
       // console.log('this.get()', this.get())
 
