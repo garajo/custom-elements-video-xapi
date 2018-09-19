@@ -1,13 +1,21 @@
 # Custom Elements Video XAPI
 
-## Run hot loading dev environment
 
-Use this when you're writing new happy code!
+## First Time
 
 ```bash
 git clone git@github.com:garajo/custom-elements-video-xapi.git
 cd custom-elements-video-xapi
 npm install
+npm run build
+```
+
+## Run hot loading dev environment
+
+Use this when you're writing new happy code!
+
+__afterwards__
+```
 npm run dev
 ```
 
